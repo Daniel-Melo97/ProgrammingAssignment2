@@ -6,13 +6,23 @@
 
 makeCacheMatrix <- function(x = matrix()) {
 	  inv <- NULL
+	  
+	  #this function will create the matrix	
         setMatrix <- function(y) {   
                 x <<- y
                 inv <<- NULL
         }
-        getMatrix <- function() x    
-        setinv <- function(inverse)inv <<- inverse  
-        getinv <- function() inv    
+	  
+	  #this function will return the matrix
+        getMatrix <- function() x
+	  
+	  #this function will set the inverse    
+        setinv <- function(inverse)inv <<- inverse 
+	  
+	  #this function will return the inverse	 
+        getinv <- function() inv
+
+	  #returning the list with the 'special' matrix	    
         list(setMatrix = setMatrix, getMatrix = getMatrix,
              setinv = setinv,
              getinv = getinv)
@@ -24,14 +34,19 @@ makeCacheMatrix <- function(x = matrix()) {
 ## the function calculate and set the inverse of matrix
 
 cacheSolve <- function(x, ...) {
+	  # I will recieve the inverse	
         I <- x$getinv()
+	
+	  #if the inverse isn't null, it will just return the inverse
         if(!is.null(I)) {
-                message("getting inversed matrix")
-                return(I)
-        }else{
+               
+		    message("getting inversed matrix")
+                return(I) #return the inverse of matrix
+
+        }else{#if I is null, Mat will recieve the matrix
 		mat <- x$getMatrix()
-        	I <- solve(mat, ...)
-        	x$setinv(I)
-        	I
+        	I <- solve(mat, ...) #I will recieve the inverse of matrix
+        	x$setinv(I) # the object will set the inv to recieve the value of I
+        	I #return the inverse of matrix
 	  }      
 }
